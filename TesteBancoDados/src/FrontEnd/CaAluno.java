@@ -15,7 +15,8 @@ import javax.swing.table.DefaultTableModel;
  */
 public class CaAluno extends javax.swing.JDialog {
 
-    private Conexao c;    
+    private Conexao c; 
+    
     public CaAluno() {
         initComponents();
         this.setModal(true);
@@ -32,13 +33,17 @@ public class CaAluno extends javax.swing.JDialog {
         }          
         
         try {
-            this.c.setResultSet("SELECT * FROM aluno");
+            this.c.setResultSet("SELECT "
+                    + "CodPaciente, Nome, CPF, Altura, Peso "
+                    + "FROM paciente");
             if (this.c.getResultSet().first()) {
                 do {
                     Object[] Linha = {
-                        this.c.getResultSet().getString("Matricula"),
+                        this.c.getResultSet().getString("CodPaciente"),
                         this.c.getResultSet().getString("Nome"),
-                        this.c.getResultSet().getString("Celular")
+                        this.c.getResultSet().getString("CPF"),
+                        this.c.getResultSet().getString("Altura"),
+                        this.c.getResultSet().getString("Peso")
                     };
                     d.addRow(Linha);
                 } while(this.c.getResultSet().next());
@@ -82,17 +87,17 @@ public class CaAluno extends javax.swing.JDialog {
 
         grdAluno.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Matrícula", "Nome", "Celular"
+                "Cod. Paciente", "Nome", "CPF", "Altura", "Peso"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -149,7 +154,7 @@ public class CaAluno extends javax.swing.JDialog {
                     .addComponent(jButton3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(7, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
